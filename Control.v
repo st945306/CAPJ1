@@ -30,7 +30,7 @@ always@(*) begin
 		Mux8_o[2] = 0;
 		Mux8_o[3] = 0;
 		Mux8_o[4] = 1;
-		Mux8_o[5:6] = 2'b01;
+		Mux8_o[6:5] = 2'b10;
 		Mux8_o[7] = 0;
 	end
 	// addi
@@ -40,7 +40,7 @@ always@(*) begin
 		Mux8_o[2] = 0;
 		Mux8_o[3] = 0;
 		Mux8_o[4] = 0;
-		Mux8_o[5:6] = 2'b00;
+		Mux8_o[6:5] = 2'b00;
 		Mux8_o[7] = 1;
 	end
 	// sw
@@ -50,7 +50,7 @@ always@(*) begin
 		Mux8_o[2] = 1;
 		Mux8_o[3] = 0;
 		Mux8_o[4] = 0;
-		Mux8_o[5:6] = 2'b00;
+		Mux8_o[6:5] = 2'b00;
 		Mux8_o[7] = 0; 
 	end
 	// lw
@@ -60,7 +60,7 @@ always@(*) begin
 		Mux8_o[2] = 0;
 		Mux8_o[3] = 1;
 		Mux8_o[4] = 0;
-		Mux8_o[5:6] = 2'b00;
+		Mux8_o[6:5] = 2'b00;
 		Mux8_o[7] = 1; 
 	end
 	// jump
@@ -71,7 +71,7 @@ always@(*) begin
 		Mux8_o[2] = 0;
 		Mux8_o[3] = 0;
 		Mux8_o[4] = 0;
-		Mux8_o[5:6] = 2'b00;
+		Mux8_o[6:5] = 2'b00;
 		Mux8_o[7] = 0; 
 	end
 	// beq
@@ -82,7 +82,7 @@ always@(*) begin
 		Mux8_o[2] = 0;
 		Mux8_o[3] = 0;
 		Mux8_o[4] = 0;
-		Mux8_o[5:6] = 2'b10;
+		Mux8_o[6:5] = 2'b01;
 		Mux8_o[7] = 0; 
 	end
 end
