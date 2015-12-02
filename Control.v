@@ -1,44 +1,90 @@
-module Control
-(
-    Op_i,
-    RegDst_o,
-    ALUOp_o,
-    ALUSrc_o,
-    RegWrite_o
+module Control(
+	Op_i,
+	Branch_o,
+	Jump_o,
+	Mux8_o
 );
-input [5:0] Op_i;
-output RegDst_o;
-output [1:0] ALUOp_o;
-output ALUSrc_o;
-output RegWrite_o;
 
-reg [4:0] out;
-assign RegDst_o = out[0];
-assign ALUOp_o = out[2:1];
-assign ALUSrc_o = out[3];
-assign RegWrite_o = out[4];
+input		[5:0]    Op_i;
+output reg	         Branch_o,Jump_o;
+output reg 	[7:0]    Mux8_o;
 
-always @(Op_i) begin
-    if (Op_i == 6'b000000) begin	//R-type
-	out = 5'b10111;
-    end
-    else if (Op_i == 6'b001101) begin	//ori
+//WB
+// Mux8_o[0] is RegWrite
+// Mux8_o[1] is MemtoReg
+//M
+// Mux8_o[2] is MemRead
+// Mux8_o[3] is MemWrite
+//EX
+// Mux8_o[4] is ALUSrc
+// Mux8_o[5][6] is ALUOp 2 bit
+// Mux8_o[7] is RegDst
 
-    end
-    else if (Op_i == 6'b001000) begin	//addi
-	out = 5'b11000;
-    end
-
-    else if (Op_i == 6'b101011) begin	//sw
- 
-    end
-
-    else if (Op_i == 6'b000100) begin	//beq
-
-    end
-
-    else if (Op_i == 6'b000010) begin	//jump
-
-    end
+always@(*) begin
+	Branch_o = 0;
+	Jump_o = 0;
+	//r-type
+	if(Op_i == 6'b000000) begin
+		Mux8_o[0] = 1;
+		Mux8_o[1] = 0;
+		Mux8_o[2] = 0;
+		Mux8_o[3] = 0;
+		Mux8_o[4] = 1;
+		Mux8_o[5:6] = 2'b01;
+		Mux8_o[7] = 0;
+	end
+	// addi
+	else if(Op_i == 6'b001000) begin
+		Mux8_o[0] = 1;
+		Mux8_o[1] = 0;
+		Mux8_o[2] = 0;
+		Mux8_o[3] = 0;
+		Mux8_o[4] = 0;
+		Mux8_o[5:6] = 2'b00;
+		Mux8_o[7] = 1;
+	end
+	// sw
+	else if(Op_i == 6'b101011) begin 
+		Mux8_o[0] = 0;
+		Mux8_o[1] = 0;
+		Mux8_o[2] = 1;
+		Mux8_o[3] = 0;
+		Mux8_o[4] = 0;
+		Mux8_o[5:6] = 2'b00;
+		Mux8_o[7] = 0; 
+	end
+	// lw
+	else if(Op_i == 6'b100011) begin 
+		Mux8_o[0] = 1;
+		Mux8_o[1] = 1;
+		Mux8_o[2] = 0;
+		Mux8_o[3] = 1;
+		Mux8_o[4] = 0;
+		Mux8_o[5:6] = 2'b00;
+		Mux8_o[7] = 1; 
+	end
+	// jump
+	else if(Op_i == 6'b000010) begin 
+		Jump_o = 1;
+		Mux8_o[0] = 0;
+		Mux8_o[1] = 0;
+		Mux8_o[2] = 0;
+		Mux8_o[3] = 0;
+		Mux8_o[4] = 0;
+		Mux8_o[5:6] = 2'b00;
+		Mux8_o[7] = 0; 
+	end
+	// beq
+	else if(Op_i == 6'b000100) begin 
+		Branch_o = 1;
+		Mux8_o[0] = 0;
+		Mux8_o[1] = 0;
+		Mux8_o[2] = 0;
+		Mux8_o[3] = 0;
+		Mux8_o[4] = 0;
+		Mux8_o[5:6] = 2'b10;
+		Mux8_o[7] = 0; 
+	end
 end
-endmodule 
+
+endmodule
