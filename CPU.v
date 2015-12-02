@@ -92,7 +92,7 @@ Add_pc Add_pc(
 );
 
 ADD ADD(
-         .data1_in       (Sign_Extend.data_o),
+         .data1_in       (Sign_Extend.data_o << 2),
          .data2_in       (IF_ID.pc_o),
          .data_o         ()
 );
