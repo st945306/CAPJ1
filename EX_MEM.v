@@ -1,6 +1,6 @@
 module EX_MEM(
 	clk,
-    //reset,
+    rst,
     WB_i, 
     M_i,
     ALUResult_i, 
