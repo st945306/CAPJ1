@@ -10,9 +10,9 @@ output reg     data_o ;
 
 always@(*)begin
 	if(data1_i == data2_i)
-		.data_o  = 1;
+		data_o  = 1;
 	else
-		.data_o  = 0;
+		data_o  = 0;
 end
 
 endmodule
