@@ -149,7 +149,8 @@ ALU_Control ALU_Control(
 
 HD HD(
     	.inst20_16_i    (ID_EX.inst20_16_o),
- 	.inst25_0_i    	(inst[25:0]),
+ 	.inst25_0_i    	(inst),
+	.MemRead	(ID_EX.M_o[1]),
     	.IF_ID_o    	(),
     	.PC_o        	(),
     	.mux8_o    	()
