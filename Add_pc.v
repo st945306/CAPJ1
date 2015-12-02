@@ -1,4 +1,4 @@
-module Adder(data1_in, data2_in, data_o);
+module Add_pc(data1_in, data2_in, data_o);
 
 	input	[31:0]	data1_in, data2_in;
 	output	[31:0]	data_o;
