@@ -37,12 +37,12 @@ always @(*) begin
     if (MEM_WB_WB_i &&
         MEM_WB_mux3_i != 5'b00000 &&
         MEM_WB_mux3_i == ID_EX_inst25_21_i) begin
-        ForwardA = 2'b01;
+        mux6_o = 2'b01;
     end
     if (MEM_WB_WB_i &&
         MEM_WB_mux3_i != 5'b00000 &&
         MEM_WB_mux3_i == ID_EX_inst20_16_i) begin
-        ForwardB = 2'b01;
+        mux7_o = 2'b01;
     end
 end
 

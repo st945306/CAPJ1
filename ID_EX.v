@@ -10,9 +10,8 @@ module ID_EX(
 	
 	readData1_i, 
 	readData2_i,
-	sign_extended_i, 
+	sign_extend_i, 
 	inst25_21_i,
-	inst20_16_i, 
 	inst20_16_i, 
 	inst15_11_i,
 
@@ -26,7 +25,6 @@ module ID_EX(
 	sign_extend_o, 
 	inst25_21_o, 
 	inst20_16_o, 
-	inst20_16_o, 
 	inst15_11_o
 );
 
@@ -34,12 +32,12 @@ module ID_EX(
 	input [1:0] WB_i,M_i;
 	input [3:0] EX_i; 
 	input [31:0] data1_i, readData1_i, readData2_i, sign_extend_i;
-	input [4:0] inst25_21_i, inst20_16_i, inst20_16_i, inst15_11_i;
+	input [4:0] inst25_21_i, inst20_16_i, inst15_11_i;
 			   
 	output reg[1:0] WB_o, M_o, EX2_o;
 	output reg EX1_o, EX3_o;
 	output reg[31:0] data1_o, data2_o, sign_extend_o; 
-	output reg[4:0] inst25_21_o, inst20_16_o, inst20_16_o, inst15_11_o;
+	output reg[4:0] inst25_21_o, inst20_16_o, inst15_11_o;
 
 	always@(posedge rst_i)begin
 		WB_o = 0; 

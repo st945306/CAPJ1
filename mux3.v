@@ -8,10 +8,10 @@ module  mux3(
 input   [4:0]  data1_i, data2_i;
 input	RegDst_i;
 
-output  [4:0]  data_o;
+output  reg [4:0]  data_o;
 
 always@(data1_i or data2_i or RegDst_i) begin
-	if(select_i == 1'b1) begin
+	if(RegDst_i == 1'b1) begin
 		data_o = data1_i;
 	end
 	else begin

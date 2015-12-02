@@ -31,7 +31,7 @@ always@(posedge clk_i)begin
 		if(Hz_i)
 			inst_o <= inst_o;
 		else
-    		inst_o <= inst_i;
+    		inst_o <= read_data_i;
 	end  
 	
 end

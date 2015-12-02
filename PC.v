@@ -3,7 +3,7 @@ module PC
   clk_i,
   rst_i,
   start_i,
-	HD_i,
+  HD_i,
   pc_i,
   pc_o
 );
@@ -20,15 +20,16 @@ always@(posedge clk_i or negedge rst_i) begin
         pc_o <= 32'b0;
   end
   else if(start_i)begin
-    if(HD_i)
+    if(HD_i) begin
       pc_o = pc_i-4;
     end
-    else
+    else begin
       pc_o = pc_i;
     end
   end
-  else
-		pc_o = 32'b0;
+  else begin
+      pc_o = 32'b0;
+  end
 end
 
 endmodule
