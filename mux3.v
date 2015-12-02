@@ -1,8 +1,8 @@
 module  mux3(
-	.RegDst_i,
-	.data1_i,
-	.data2_i,
-	.data_o
+	RegDst_i,
+	data1_i,
+	data2_i,
+	data_o
 );
 
 input   [4:0]  data1_i, data2_i;

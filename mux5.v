@@ -1,8 +1,8 @@
 module mux5(
-	.MemtoReg_i,
-	.data1_i,
-	.data2_i,
-	.data_o
+	MemtoReg_i,
+	data1_i,
+	data2_i,
+	data_o
 );
 
 input	[31:0]		data1_i;

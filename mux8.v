@@ -1,6 +1,6 @@
 module mux8(
-	HD_i		
-	Control_i		
+	HD_i,		
+	Control_i,		
 	data_o
 );
 
