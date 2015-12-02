@@ -1,6 +1,6 @@
 module ID_EX(
-	clk,
-	rst,
+	clk_i,
+	rst_i,
 
 	WB_i, 
 	M_i, 
@@ -30,7 +30,7 @@ module ID_EX(
 	inst15_11_o
 );
 
-	input rst, clk_i;
+	input rst_i, clk_i;
 	input [1:0] WB_i,M_i;
 	input [3:0] EX_i; 
 	input [31:0] data1_i, readData1_i, readData2_i, sign_extend_i;
@@ -41,7 +41,7 @@ module ID_EX(
 	output reg[31:0] data1_o, data2_o, sign_extend_o; 
 	output reg[4:0] inst25_21_o, inst20_16_o, inst20_16_o, inst15_11_o;
 
-	always@(posedge rst)begin
+	always@(posedge rst_i)begin
 		WB_o = 0; 
 		M_o = 0;
 		EX1_o = 0;
@@ -56,7 +56,7 @@ module ID_EX(
 		inst15_11_o = 0;
     end
 	
-	always@(posedge clk)begin
+	always@(posedge clk_i)begin
 			WB_o <= WB_i;
 			M_o <= M_i;
 			EX1_o <= EX_i[0];

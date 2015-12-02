@@ -1,6 +1,6 @@
 module EX_MEM(
-	clk,
-    rst,
+	clk_i,
+    rst_i,
     WB_i, 
     M_i,
     ALUResult_i, 
@@ -15,18 +15,17 @@ module EX_MEM(
 	mux3_result_o
 );
 
-	input clk;
-    input rst;
-    input [1:0] WB_i, M_i;
-    input [31:0] ALUResult_i, mux7_i; 
-    input [4:0] mux3_i; 
+	input clk_i, rst_i;
+	input [1:0] WB_i, M_i;
+	input [31:0] ALUResult_i, mux7_i; 
+	input [4:0] mux3_i; 
     
-    output reg[1:0] WB_o;
-    output reg MemRead, MemWrite;
-    output reg[31:0] Address_o, Write_data_o; 
-    output reg[4:0] mux3_result_o; 
+	output reg[1:0] WB_o;
+	output reg MemRead, MemWrite;
+	output reg[31:0] Address_o, Write_data_o; 
+	output reg[4:0] mux3_result_o; 
 	
-	always@(posedge rst)begin
+	always@(posedge rst_i)begin
 		WB_o = 0;
 		MemRead = 0;
 		MemWrite = 0;		
@@ -35,7 +34,7 @@ module EX_MEM(
 		mux3_result_o = 0;
 	end
 	
-	always@(posedge clk)begin
+	always@(posedge clk_i)begin
 			WB_o <= WB_i;
 			MemRead <= M_i[0];
 			MemWrite <= M_i[1];			

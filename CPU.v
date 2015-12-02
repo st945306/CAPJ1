@@ -12,89 +12,223 @@ input               start_i;
 
 wire [31:0] inst_addr, inst;
 
+mux1 mux1(
+    .Eq_i        (Eq.data_o),
+    .Branch_i    (Control.Branch_o),    
+    .Add_pc_i    (Add_pc.pc_o),
+    .ADD_i       (ADD.data_o),
+    .data_o      ()
+);
+
+mux2 mux2(
+    .branchAddr_i    (mux1.data_o),
+    .jump_i    	     (Control.Jump_o),
+    .inst_i          ({mux1.data_o[31:28], IF_ID.inst[25:0], 2'b00}),
+    .data_o          ()
+);
+
+mux3 mux3(
+    .RegDst_i    (ID_EX.EX3_o),
+    .data1_i     (ID_EX.inst20_16_o),
+    .data2_i     (ID_EX.inst15_11_o),
+    .data_o      ()
+);
+
+mux4 mux4(
+    .data1_i	(mux7.data_o),
+    .data2_i    (ID_EX.sign_extend_o),
+    .ALUSrc_i	(ID_EX.EX1_o),
+    .data_o     ()
+);
+
+mux5 mux5(
+    .MemtoReg_i (MEM_WB.MemtoReg_o),
+    .data1_i   	(MEM_WB.mux5_1_o),
+    .data2_i    (MEM_WB.mux5_2_o),
+    .data_o    	()
+);
+
+mux6 mux6 (
+    .data1_i    (ID_EX.data1_o),
+    .data2_i    (mux5.data_o),
+    .data3_i    (EX_MEM.Address_o),
+    .fw_i       (FW.mux6_o),
+    .data_o    	()
+);
+
+mux7 mux7(
+    .data1_i    (ID_EX.data2_o),
+    .data2_i    (mux5.data_o),
+    .data3_i    (EX_MEM.Address_o),
+    .fw_i       (FW.mux7_o),
+    .data_o 	()
+);
+
+mux8 mux8(
+    .HD_i	(HD.mux8_o),
+    .Control_i  (Control.MUX8_o),
+    .data_o    	()
+);
+
+Data_memory Data_memory(
+    .Address_i    	(EX_MEM.Address_o),
+    .WriteData_i    	(EX_MEM.WriteData_o),
+    .MemWrite_i    	(EX_MEM.MemWrite_o),
+    .MemRead_i   	(EX_MEM.MemRead_o),
+    .data_o    		()
+);
+
 Control Control(
-    .Op_i       (inst[31:26]),
-    .RegDst_o   (MUX_RegDst.select_i),
-    .ALUOp_o    (ALU_Control.ALUOp_i),
-    .ALUSrc_o   (MUX_ALUSrc.select_i),
-    .RegWrite_o (Registers.RegWrite_i)
+        .Op_i		(inst[31:26]),
+        .Branch_o     	(),
+        .Jump_o        	(),
+        .MUX8_o       	()
 );
 
-
-
-Adder Add_PC(
-    .data1_in   (inst_addr),
-    .data2_in   (32'd4),
-    .data_o     (PC.pc_i)
+Add_pc Add_pc(
+        .data1_in       (inst_addr),
+        .data2_in       (32'd4),
+        .data_o         ()
 );
 
+ADD ADD(
+         .data1_in       (Sign_Extend.data_o),
+         .data2_in       (IF_ID.pc_o),
+         .data_o         ()
+);
 
 PC PC(
-    .clk_i      (clk_i),
-    .rst_i      (rst_i),
-    .start_i    (start_i),
-    .pc_i       (Add_PC.data_o),
-    .pc_o       (inst_addr)
+        .clk_i          (clk_i),
+	.rst_i          (rst_i),
+        .start_i        (start_i),
+        .HD_i        	(HD.PC_o),
+        .pc_i           (mux2.data_o),
+        .pc_o           (inst_addr)
 );
 
-Instruction_Memory Instruction_Memory(
-    .addr_i     (inst_addr), 
-    .instr_o    (inst)
+Eq Eq(
+        .data1_i     (Registers.ReadData1_o),
+        .data2_i     (Registers.ReadData2_o),
+        .data_o      ()
 );
 
 Registers Registers(
-    .clk_i      (clk_i),
-    .RSaddr_i   (inst[25:21]),
-    .RTaddr_i   (inst[20:16]),
-    .RDaddr_i   (MUX_RegDst.data_o), 
-    .RDdata_i   (ALU.data_o),
-    .RegWrite_i (Control.RegWrite_o), 
-    .RSdata_o   (ALU.data1_i), 
-    .RTdata_o   (MUX_ALUSrc.data1_i) 
+        .clk_i         		(clk_i),
+        .ReadRegister1_i        (inst[25:21]),
+        .ReadRegister2_i        (inst[20:16]),
+        .WriteRegister_i        (MEM_WB.FW_o), 
+        .WriteData_i       	(mux5.data_o),
+        .RegWrite_i    		(MEM_WB.RegWrite_o), 
+        .ReadData1_o   		(), 
+        .ReadData2_o   		() 
 );
 
 
-MUX5 MUX_RegDst(
-    .data1_i    (inst[20:16]),
-    .data2_i    (inst[15:11]),
-    .select_i   (Control.RegDst_o),
-    .data_o     (Registers.RDaddr_i)
+Sign_Extend Sign_Extend(
+        .data_i         (inst[15:0]),
+        .data_o         ()
 );
 
-
-
-MUX32 MUX_ALUSrc(
-    .data1_i    (Registers.RTdata_o),
-    .data2_i    (Signed_Extend.data_o),
-    .select_i   (Control.ALUSrc_o),
-    .data_o     (ALU.data2_i)
+Instruction_Memory Instruction_Memory(
+        .addr_i         (inst_addr), 
+        .instr_o        ()
 );
-
-
-
-Sign_Extend Signed_Extend(
-    .data_i     (inst[15:0]),
-    .data_o     (MUX_ALUSrc.data2_i)
-);
-
-  
 
 ALU ALU(
-    .data1_i    (Registers.RSdata_o),
-    .data2_i    (MUX_ALUSrc.data_o),
-    .ALUCtrl_i  (ALU_Control.ALUCtrl_o),
-    .data_o     (Registers.RDdata_i),
-    .Zero_o     ()
+        .data1_i        (mux6.data_o),
+        .data2_i        (mux4.data_o),
+        .ALUCtrl_i      (ALU_Control.ALUCtrl_o),
+        .data_o         ()
 );
-
-
 
 ALU_Control ALU_Control(
-    .funct_i    (inst[5:0]),
-    .ALUOp_i    (Control.ALUOp_o),
-    .ALUCtrl_o  (ALU.ALUCtrl_i)
+        .funct_i        (ID_EX.sign_extend_o),
+        .ALUOp_i        (ID_EX.EX2_o),
+        .ALUCtrl_o      ()
 );
 
+HD HD(
+    	.inst20_16_i    (ID_EX.inst20_16_o),
+ 	.inst25_0_i    	(inst[25:0]),
+    	.IF_ID_o    	(),
+    	.PC_o        	(),
+    	.mux8_o    	()
+);
+
+FW FW(
+    .ID_EX_inst25_21_i  (ID_EX.inst25_21_o),
+    .ID_EX_inst20_16_i  (ID_EX.inst20_16_o),
+    .EX_MEM_mux3_i	(EX_MEM.mux3_result_o),
+    .EX_MEM_WB_i    	(EX_MEM.WB_o),
+    .MEM_WB_mux3_i    	(MEM_WB.FW_o),
+    .MEM_WB_WB_i    	(MEM_WB.RegWrite_o),
+    .mux6_o        	(),
+    .mux7_o        	()
+);
+
+IF_ID IF_ID(
+    .pc_i        	(Add_pc.MUX1_IF_ID),
+    .read_data_i    	(Instruction_Memory.instr_o),
+    .flush_i        	(Control.Jump_o | (Eq.data_o & Control.Branch_o)),
+    .Hz_i        	(HD.IF_ID_o),
+    .pc_o        	(),
+    .inst_o        	(inst)
+);
+
+ID_EX ID_EX(
+ 	.clk_i    	(clk_i),
+  	.rst_i     	(rst_i),
+   	.WB_i		(mux8.data_o[7:6]),    //2 bits
+    	.M_i        	(mux8.data_o[5:4]),     //2 bits
+    	.EX_i      	(mux8.data_o[3:0]),	//4 bits
+	.data1_i    	(IF_ID.pc_o),
+	.readData1_i    (Registers.ReadData1_o),
+	.readData2_i    (Registers.ReadData2_o),
+	.sign_extend_i	(Sign_Extend.data_o),
+	.inst25_21_i    (inst[25:21]),
+	.inst20_16_i    (inst[20:16]),
+	.inst15_11_i    (inst[15:11]),
+	.WB_o        	(EX_MEM.WB_i),
+	.M_o      	(EX_MEM.M_i),
+	.EX1_o    	(mux4.ALUSrc_i),
+	.EX2_o    	(ALU_Control.ALUOp_i),
+	.EX3_o   	(mux3.RegDst_i),
+	.data1_o 	(mux6.data1_i),
+	.data2_o    	(mux7.data1_i),
+	.sign_extend_o	(),
+	.inst25_21_o    (),
+	.inst20_16_o    (),
+	.inst15_11_o    ()
+);
+
+
+EX_MEM EX_MEM(
+    .clk_i		(clk_i),
+    .rst_i   	   	(rst_i),
+    .WB_i     	  	(ID_EX.WB_o),
+    .M_i        	(ID_EX.M_o),
+    .ALUResult_i	(ALU.data_o),
+    .mux3_i    		(mux3.data_o),
+    .mux7_i    		(mux7.data_o),
+    .WB_o        	(),
+    .MemRead_o    	(),
+    .MemWrite_o    	(),
+    .Address_o    	(),
+    .Write_data_o  	(),
+    .mux3_result_o	()
+);
+
+MEM_WB MEM_WB(
+    .WB_i	(EX_MEM.WB_o),
+    .ReadData_i (Data_memory.data_o),
+    .ALU_i      (EX_MEM.Address_o),
+    .mux3_i    	(EX_MEM.mux3_result_o),
+    .MemtoReg_o (),
+    .RegWrite_o (),
+    .mux5_1_o  	(),
+    .mux5_2_o   (),
+    .FW_o       ()
+);
 
 endmodule
 
