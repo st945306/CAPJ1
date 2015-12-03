@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 module CPU
 (
     clk_i, 
@@ -231,4 +232,3 @@ MEM_WB MEM_WB(
 );
 
 endmodule
-
