@@ -10,11 +10,13 @@ input	[31:0]		data2_i;
 input				ALUSrc_i;
 output reg	[31:0]	data_o;		
 
-always@(*)begin
-	if(ALUSrc_i)
+always@(data1_i or data2_i or ALUSrc_i)begin
+	if(ALUSrc_i==1'b1) begin
 		data_o = data1_i;
-	else
+	end
+	else begin
 		data_o = data2_i;
+	end
 end	
 
 endmodule

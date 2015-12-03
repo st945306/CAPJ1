@@ -7,14 +7,16 @@ module mux2(
 
 input	[31:0]		branchAddr_i;
 input	[31:0]		inst_i;
-input			jump_i;
+input				jump_i;
 output reg [31:0]	data_o;
 
-always@(*)begin
-	if(jump_i)
+always@(branchAddr_i or inst_i or jump_i)begin
+	if(jump_i==1'b1) begin
 		data_o = inst_i;
-	else
+	end
+	else begin
 		data_o = branchAddr_i;
+	end
 end
 
 endmodule

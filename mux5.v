@@ -11,10 +11,12 @@ input				MemtoReg_i;
 output reg [31:0]	data_o;
 
 always@(MemtoReg_i or data1_i or data2_i)begin
-	if(MemtoReg_i == 1'b1)
+	if(MemtoReg_i == 1'b1) begin
 		data_o = data1_i;
-	else
+	end
+	else begin
 		data_o = data2_i;
+	end
 end
 
 endmodule

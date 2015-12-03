@@ -12,11 +12,13 @@ input				Eq_i;
 input				Branch_i;
 output reg [31:0]	data_o;
 
-always@(*)begin
-	if( Eq_i & Branch_i )
+always@(Eq_i or Branch_i or Add_pc_i or ADD_i) begin
+	if( (Eq_i&Branch_i) ==1'b1) begin
 		data_o = ADD_i;
-	else
+	end
+	else begin
 		data_o = Add_pc_i;
+	end
 end
 
 endmodule
