@@ -1,13 +1,11 @@
 module CPU
 (
     clk_i, 
-    rst_i,
     start_i
 );
 
 // Ports
 input               clk_i;
-input               rst_i;
 input               start_i;
 
 wire [31:0] inst_addr, inst;
@@ -149,8 +147,8 @@ ALU_Control ALU_Control(
 
 HD HD(
     	.inst20_16_i    (ID_EX.inst20_16_o),
- 	.inst25_0_i    	(inst),
-	.MemRead	(ID_EX.M_o[0]),
+ 	.inst_i    	(inst),
+	.MemRead_i	(ID_EX.M_o[0]),
     	.IF_ID_o    	(),
     	.PC_o        	(),
     	.mux8_o    	()
@@ -178,7 +176,7 @@ IF_ID IF_ID(
 
 ID_EX ID_EX(
  	.clk_i    	(clk_i),
-  	.rst_i     	(rst_i),
+	.rst_i		(),
    	.WB_i		(mux8.data_o[7:6]),    //2 bits
     	.M_i        	(mux8.data_o[5:4]),     //2 bits
     	.EX_i      	(mux8.data_o[3:0]),	//4 bits
@@ -205,7 +203,7 @@ ID_EX ID_EX(
 
 EX_MEM EX_MEM(
     .clk_i		(clk_i),
-    .rst_i   	   	(rst_i),
+    .rst_i		(),
     .WB_i     	  	(ID_EX.WB_o),
     .M_i        	(ID_EX.M_o),
     .ALUResult_i	(ALU.data_o),

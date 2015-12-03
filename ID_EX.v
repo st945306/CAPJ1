@@ -1,7 +1,6 @@
 module ID_EX(
 	clk_i,
 	rst_i,
-
 	WB_i, 
 	M_i, 
 	EX_i, 

@@ -1,6 +1,6 @@
 module EX_MEM(
 	clk_i,
-    rst_i,
+	rst_i,
     WB_i, 
     M_i,
     ALUResult_i, 
