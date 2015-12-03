@@ -13,7 +13,7 @@ wire [31:0] inst_addr, inst;
 mux1 mux1(
     .Eq_i        (Eq.data_o),
     .Branch_i    (Control.Branch_o),    
-    .Add_pc_i    (Add_pc.pc_o),
+    .Add_pc_i    (Add_pc.data_o),
     .ADD_i       (ADD.data_o),
     .data_o      ()
 );
@@ -21,7 +21,7 @@ mux1 mux1(
 mux2 mux2(
     .branchAddr_i    (mux1.data_o),
     .jump_i    	     (Control.Jump_o),
-    .inst_i          ({mux1.data_o[31:28], IF_ID.inst[25:0], 2'b00}),
+    .inst_i          ({mux1.data_o[31:28], inst[25:0], 2'b00}),
     .data_o          ()
 );
 
@@ -64,13 +64,13 @@ mux7 mux7(
 
 mux8 mux8(
     .HD_i	(HD.mux8_o),
-    .Control_i  (Control.MUX8_o),
+    .Control_i  (Control.mux8_o),
     .data_o    	()
 );
 
 Data_memory Data_memory(
     .Address_i    	(EX_MEM.Address_o),
-    .WriteData_i    	(EX_MEM.WriteData_o),
+    .WriteData_i    	(EX_MEM.Write_data_o),
     .MemWrite_i    	(EX_MEM.MemWrite_o),
     .MemRead_i   	(EX_MEM.MemRead_o),
     .data_o    		()
@@ -166,7 +166,7 @@ FW FW(
 );
 
 IF_ID IF_ID(
-    .pc_i        	(Add_pc.MUX1_IF_ID),
+    .pc_i        	(Add_pc.data_o),
     .read_data_i    	(Instruction_Memory.instr_o),
     .flush_i        	(Control.Jump_o | (Eq.data_o & Control.Branch_o)),
     .Hz_i        	(HD.IF_ID_o),
