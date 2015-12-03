@@ -69,6 +69,7 @@ mux8 mux8(
 );
 
 Data_memory Data_memory(
+    .clk_i		(clk_i),
     .Address_i    	(EX_MEM.Address_o),
     .WriteData_i    	(EX_MEM.Write_data_o),
     .MemWrite_i    	(EX_MEM.MemWrite_o),
