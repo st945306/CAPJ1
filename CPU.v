@@ -166,7 +166,7 @@ FW FW(
 );
 
 IF_ID IF_ID(
-    .pc_i        	(Add_pc.MUX1_IF_ID),
+    .pc_i        	(Add_pc.data_o),
     .read_data_i    	(Instruction_Memory.instr_o),
     .flush_i        	(Control.Jump_o | (Eq.data_o & Control.Branch_o)),
     .Hz_i        	(HD.IF_ID_o),
