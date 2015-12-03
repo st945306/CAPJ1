@@ -36,8 +36,8 @@ module EX_MEM(
 	
 	always@(posedge clk_i)begin
 			WB_o <= WB_i;
-			MemRead_o <= M_i[0];
-			MemWrite_o <= M_i[1];			
+			MemRead_o <= M_i[0:0];
+			MemWrite_o <= M_i[1:1];			
 			Address_o <= ALUResult_i;
 			Write_data_o <= mux7_i;
 			mux3_result_o <= mux3_i;

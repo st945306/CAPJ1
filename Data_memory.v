@@ -1,19 +1,18 @@
 module Data_memory(
-	clk_i,
 	Address_i,
 	WriteData_i,
 	MemWrite_i,
 	MemRead_i,
 	data_o
 );
-	input clk_i, MemWrite_i, MemRead_i;
+	input MemWrite_i, MemRead_i;
 	input [31:0] Address_i, WriteData_i;
 	output reg	[31:0] data_o;
 	
 	reg [7:0] memory [0:31];
 
 
-always@(posedge clk_i or Address_i or WriteData_i or MemWrite_i or MemRead_i)begin
+always@(Address_i or WriteData_i or MemWrite_i or MemRead_i)begin
 	if(MemRead_i)begin
 		data_o = {
 		    memory[Address_i + 3],
