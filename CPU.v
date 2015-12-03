@@ -80,7 +80,7 @@ Control Control(
         .Op_i		(inst[31:26]),
         .Branch_o     	(),
         .Jump_o        	(),
-        .MUX8_o       	()
+        .Mux8_o       	()
 );
 
 Add_pc Add_pc(
@@ -166,7 +166,7 @@ FW FW(
 );
 
 IF_ID IF_ID(
-    .pc_i        	(Add_pc.data_o),
+    .pc_i        	(Add_pc.MUX1_IF_ID),
     .read_data_i    	(Instruction_Memory.instr_o),
     .flush_i        	(Control.Jump_o | (Eq.data_o & Control.Branch_o)),
     .Hz_i        	(HD.IF_ID_o),
