@@ -142,7 +142,7 @@ ALU ALU(
 );
 
 ALU_Control ALU_Control(
-        .funct_i        (ID_EX.sign_extend_o),
+        .funct_i        (ID_EX.sign_extend_o[5:0]),
         .ALUOp_i        (ID_EX.EX2_o),
         .ALUCtrl_o      ()
 );
@@ -160,7 +160,7 @@ FW FW(
     .ID_EX_inst25_21_i  (ID_EX.inst25_21_o),
     .ID_EX_inst20_16_i  (ID_EX.inst20_16_o),
     .EX_MEM_mux3_i	(EX_MEM.mux3_result_o),
-    .EX_MEM_WB_i    	(EX_MEM.WB_o),
+    .EX_MEM_WB_i    	(EX_MEM.WB_o[1]),
     .MEM_WB_mux3_i    	(MEM_WB.FW_o),
     .MEM_WB_WB_i    	(MEM_WB.RegWrite_o),
     .mux6_o        	(),
@@ -168,6 +168,8 @@ FW FW(
 );
 
 IF_ID IF_ID(
+    .clk_i		(clk_i),
+    .rst_i		(rst_i),
     .pc_i        	(Add_pc.data_o),
     .read_data_i    	(Instruction_Memory.instr_o),
     .flush_i        	(Control.Jump_o | (Eq.data_o & Control.Branch_o)),
@@ -220,6 +222,8 @@ EX_MEM EX_MEM(
 );
 
 MEM_WB MEM_WB(
+    .clk_i	(clk_i),
+    .rst_i	(rst_i),
     .WB_i	(EX_MEM.WB_o),
     .ReadData_i (Data_memory.data_o),
     .ALU_i      (EX_MEM.Address_o),
