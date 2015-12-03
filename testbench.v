@@ -2,6 +2,7 @@
 
 module TestBench;
 
+reg		   Reset;
 reg                Clk;
 reg                Start;
 integer            i, outfile, counter;
@@ -10,6 +11,7 @@ integer            stall, flush;
 always #(`CYCLE_TIME/2) Clk = ~Clk;    
 
 CPU CPU(
+    .rst_i  (Reset),
     .clk_i  (Clk),
     .start_i(Start)
 );
@@ -35,20 +37,20 @@ initial begin
     end
     
     // Load instructions into instruction memory
-    $readmemb("/home/nicky/ca/prject1/instruction.txt", CPU.Instruction_Memory.memory);
+    $readmemb("instruction.txt", CPU.Instruction_Memory.memory);
     
     // Open output file
-    outfile = $fopen("/home/nicky/ca/project1/myoutput.txt") | 1;
+    outfile = $fopen("output.txt") | 1;
     
     // Set Input n into data memory at 0x00
     CPU.Data_memory.memory[0] = 8'h5;       // n = 5 for example
     
     Clk = 1;
-    //Reset = 0;
+    Reset = 0;
     Start = 0;
     
     #(`CYCLE_TIME/4) 
-    //Reset = 1;
+    Reset = 1;
     Start = 1;
         
     

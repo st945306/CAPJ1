@@ -1,5 +1,6 @@
 module CPU
 (
+    rst_i,
     clk_i, 
     start_i
 );
@@ -7,7 +8,7 @@ module CPU
 // Ports
 input               clk_i;
 input               start_i;
-
+input		    rst_i;
 wire [31:0] inst_addr, inst;
 
 mux1 mux1(
