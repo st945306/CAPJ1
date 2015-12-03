@@ -80,7 +80,7 @@ Control Control(
         .Op_i		(inst[31:26]),
         .Branch_o     	(),
         .Jump_o        	(),
-        .MUX8_o       	()
+        .Mux8_o       	()
 );
 
 Add_pc Add_pc(
