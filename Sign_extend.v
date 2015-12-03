@@ -1,4 +1,4 @@
-module Signed_Extend(data_i, data_o);
+module Sign_extend(data_i, data_o);
 	
 	input	[15:0] data_i;
 	output	[31:0] data_o;

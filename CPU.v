@@ -92,7 +92,7 @@ Add_pc Add_pc(
 );
 
 ADD ADD(
-         .data1_in       (Sign_Extend.data_o << 2),
+         .data1_in       (Sign_extend.data_o << 2),
          .data2_in       (IF_ID.pc_o),
          .data_o         ()
 );
@@ -124,7 +124,7 @@ Registers Registers(
 );
 
 
-Sign_Extend Sign_Extend(
+Sign_extend Sign_extend(
         .data_i         (inst[15:0]),
         .data_o         ()
 );
@@ -185,7 +185,7 @@ ID_EX ID_EX(
 	.data1_i    	(IF_ID.pc_o),
 	.readData1_i    (Registers.ReadData1_o),
 	.readData2_i    (Registers.ReadData2_o),
-	.sign_extend_i	(Sign_Extend.data_o),
+	.sign_extend_i	(Sign_extend.data_o),
 	.inst25_21_i    (inst[25:21]),
 	.inst20_16_i    (inst[20:16]),
 	.inst15_11_i    (inst[15:11]),
