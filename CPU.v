@@ -181,9 +181,9 @@ IF_ID IF_ID(
 ID_EX ID_EX(
  	.clk_i    	(clk_i),
 	.rst_i		(),
-   	.WB_i		(mux8.data_o[7:6]),    //2 bits
-    	.M_i        	(mux8.data_o[5:4]),     //2 bits
-    	.EX_i      	(mux8.data_o[3:0]),	//4 bits
+   	.WB_i		(mux8.data_o[1:0]),    //2 bits, 0 is MemtoReg, 1 is RegWrite
+    	.M_i        	(mux8.data_o[3:2]),     //2 bits, 0 is MemRead, 1 is MemWrite
+    	.EX_i      	(mux8.data_o[7:4]),	//4 bits
 	.data1_i    	(IF_ID.pc_o),
 	.readData1_i    (Registers.ReadData1_o),
 	.readData2_i    (Registers.ReadData2_o),

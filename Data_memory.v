@@ -22,14 +22,15 @@ always@(posedge clk_i or Address_i or WriteData_i or MemWrite_i or MemRead_i)beg
         	memory[Address_i]
     	};
 	end
-	else if(posedge clk_i && MemWrite_i)begin
+	else if(MemWrite_i)begin
 		memory[Address_i + 3] <= WriteData_i[31:24];
 		memory[Address_i + 2] <= WriteData_i[23:16];
 		memory[Address_i + 1] <= WriteData_i[15:8];
 		memory[Address_i] <= WriteData_i[7:0];				
 	end
 	else begin
-		data_o <= 32b'x;
+		data_o <= 32'bx;
+	end
 end
 
 endmodule
