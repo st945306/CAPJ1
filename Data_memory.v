@@ -5,7 +5,7 @@ module Data_memory(
 	MemRead_i,
 	data_o
 );
-	input clk_i, MemWrite_i, MemRead_i;
+	input MemWrite_i, MemRead_i;
 	input [31:0] Address_i, WriteData_i;
 	output reg	[31:0] data_o;
 	
