@@ -29,7 +29,8 @@ always@(posedge clk_i or Address_i or WriteData_i or MemWrite_i or MemRead_i)beg
 		memory[Address_i] <= WriteData_i[7:0];				
 	end
 	else begin
-		data_o <= 32b'x;
+		data_o <= 32'bx;
+	end
 end
 
 endmodule
