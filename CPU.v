@@ -64,7 +64,7 @@ mux7 mux7(
 
 mux8 mux8(
     .HD_i	(HD.mux8_o),
-    .Control_i  (Control.mux8_o),
+    .Control_i  (Control.Mux8_o),
     .data_o    	()
 );
 
