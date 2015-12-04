@@ -51,7 +51,7 @@ always@(*) begin
 		Mux8_o[3] = 1;
 		Mux8_o[4] = 0;
 		Mux8_o[6:5] = 2'b00;
-		Mux8_o[7] = 0; 
+		Mux8_o[7] = 1; 
 	end
 	// lw
 	else if(Op_i == 6'b100011) begin 
