@@ -11,7 +11,7 @@ input				ALUSrc_i;
 output reg	[31:0]	data_o;		
 
 always@(data1_i or data2_i or ALUSrc_i)begin
-	if(ALUSrc_i==1'b1) begin
+	if(ALUSrc_i==1'b0) begin
 		data_o = data1_i;
 	end
 	else begin

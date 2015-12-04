@@ -11,7 +11,7 @@ input			   	RegDst_i;
 output  reg [4:0] 	data_o;
 
 always@(data1_i or data2_i or RegDst_i) begin
-	if(RegDst_i == 1'b1) begin
+	if(RegDst_i == 1'b0) begin
 		data_o = data1_i;
 	end
 	else begin

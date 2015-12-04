@@ -38,20 +38,6 @@ module ID_EX(
 	output reg[31:0] data1_o, data2_o, sign_extend_o; 
 	output reg[4:0] inst25_21_o, inst20_16_o, inst15_11_o;
 
-	always@(posedge rst_i)begin
-		WB_o = 0; 
-		M_o = 0;
-		EX1_o = 0;
-		EX2_o = 0;
-		EX3_o = 0;
-		data1_o = 0;
-		data2_o = 0;
-		sign_extend_o = 0; 
-		inst25_21_o = 0;
-		inst20_16_o = 0;
-		inst20_16_o = 0;
-		inst15_11_o = 0;
-    end
 	
 	always@(posedge clk_i)begin
 			WB_o <= WB_i;

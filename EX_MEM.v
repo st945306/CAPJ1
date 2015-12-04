@@ -25,14 +25,6 @@ module EX_MEM(
 	output reg[31:0] Address_o, Write_data_o; 
 	output reg[4:0] mux3_result_o; 
 	
-	always@(posedge rst_i)begin
-		WB_o = 0;
-		MemRead_o = 0;
-		MemWrite_o = 0;		
-		Address_o = 0;
-		Write_data_o = 0;
-		mux3_result_o = 0;
-	end
 	
 	always@(posedge clk_i)begin
 			WB_o <= WB_i;

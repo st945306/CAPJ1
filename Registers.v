@@ -26,7 +26,7 @@ assign  ReadData1_o = register[ReadRegister1_i];
 assign  ReadData2_o = register[ReadRegister2_i];
 
 // Write Data   
-always@(posedge clk_i) begin
+always@(negedge clk_i) begin
     if(RegWrite_i)
         register[WriteRegister_i] <= WriteData_i;
 end

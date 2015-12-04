@@ -47,8 +47,8 @@ always@(*) begin
 	else if(Op_i == 6'b101011) begin 
 		Mux8_o[0] = 0;
 		Mux8_o[1] = 0;
-		Mux8_o[2] = 1;
-		Mux8_o[3] = 0;
+		Mux8_o[2] = 0;
+		Mux8_o[3] = 1;
 		Mux8_o[4] = 0;
 		Mux8_o[6:5] = 2'b00;
 		Mux8_o[7] = 0; 
@@ -57,8 +57,8 @@ always@(*) begin
 	else if(Op_i == 6'b100011) begin 
 		Mux8_o[0] = 1;
 		Mux8_o[1] = 1;
-		Mux8_o[2] = 0;
-		Mux8_o[3] = 1;
+		Mux8_o[2] = 1;
+		Mux8_o[3] = 0;
 		Mux8_o[4] = 0;
 		Mux8_o[6:5] = 2'b00;
 		Mux8_o[7] = 1; 

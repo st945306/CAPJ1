@@ -19,7 +19,7 @@ input       [4:0]   ID_EX_inst20_16_i;
 output reg  [1:0]   mux6_o;
 output reg  [1:0]   mux7_o;
 
-always @(EX_MEM_WB_i or MEM_WB_WB_i or EX_MEM_mux3_i or MEM_WB_mux3_i or ID_EX_inst25_21_i or ID_EX_inst20_16_i or mux6_o or mux7_o) begin
+always @(*) begin
     mux6_o = 2'b00;    
     mux7_o = 2'b00 ;     
     //  EX Hazard
@@ -30,13 +30,13 @@ always @(EX_MEM_WB_i or MEM_WB_WB_i or EX_MEM_mux3_i or MEM_WB_mux3_i or ID_EX_i
     end
     if (EX_MEM_WB_i &&
         EX_MEM_mux3_i != 5'b00000 &&
-        EX_MEM_mux3_i == ID_EX_inst25_21_i) begin
+        EX_MEM_mux3_i == ID_EX_inst20_16_i) begin
         mux7_o = 2'b10;
     end
     //  Mem Hazard
     if (MEM_WB_WB_i &&
         MEM_WB_mux3_i != 5'b00000 &&
-        MEM_WB_mux3_i == ID_EX_inst20_16_i) begin
+        MEM_WB_mux3_i == ID_EX_inst25_21_i) begin
         mux6_o = 2'b01;
     end
     if (MEM_WB_WB_i &&

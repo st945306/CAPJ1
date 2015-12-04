@@ -16,10 +16,7 @@ module IF_ID(
 	output reg[31:0] pc_o, inst_o;
 
 			
-always@(posedge rst_i)begin
-	pc_o = 0;
-	inst_o = 0;	
-end
+
 
 always@(posedge clk_i)begin
 	pc_o <= pc_i;

@@ -22,13 +22,7 @@ module MEM_WB(
 	output reg[31:0] mux5_1_o, mux5_2_o;
 	output reg[4:0] FW_o;
 
-	always@(posedge rst_i)begin
-		RegWrite_o = 0;
-		MemtoReg_o = 0;
-		mux5_1_o = 0;
-		mux5_2_o = 0;
-		FW_o = 0;
-	end
+	
 	
 	always@(posedge clk_i)begin
 			RegWrite_o <= WB_i[0];
