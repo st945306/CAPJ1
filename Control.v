@@ -82,7 +82,7 @@ always@(*) begin
 		Mux8_o[2] = 0;
 		Mux8_o[3] = 0;
 		Mux8_o[4] = 0;
-		Mux8_o[6:5] = 2'b01;
+		Mux8_o[6:5] = 2'b00;
 		Mux8_o[7] = 0; 
 	end
 end

@@ -8,7 +8,7 @@ input  [1:0] ALUOp_i;
 input  [5:0] funct_i;
 output reg [2:0] ALUCtrl_o;  
 
-always@(*)begin
+always@(funct_i or ALUOp_i)begin
     //not r-type
     if(ALUOp_i==2'b00) begin
         ALUCtrl_o <= 3'b010;
