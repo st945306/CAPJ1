@@ -19,7 +19,7 @@ input       [4:0]   ID_EX_inst20_16_i;
 output reg  [1:0]   mux6_o;
 output reg  [1:0]   mux7_o;
 
-always @(*) begin
+always @(EX_MEM_WB_i or MEM_WB_WB_i or EX_MEM_mux3_i or MEM_WB_mux3_i or ID_EX_inst25_21_i or ID_EX_inst20_16_i) begin
     mux6_o = 2'b00;    
     mux7_o = 2'b00 ;     
     //  EX Hazard
