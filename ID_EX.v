@@ -48,8 +48,8 @@ module ID_EX(
 			data1_o <= readData1_i;
 			data2_o <= readData2_i;
 			sign_extend_o <= sign_extend_i;
-			inst25_21_o <= inst25_21_i; 
-			inst20_16_o <= inst20_16_i; 
-			inst15_11_o <= inst15_11_i;
+			inst25_21_o = inst25_21_i; 
+			inst20_16_o = inst20_16_i; 
+			inst15_11_o = inst15_11_i;
 	end
 endmodule

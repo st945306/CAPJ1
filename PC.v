@@ -21,14 +21,14 @@ always@(posedge clk_i or negedge rst_i) begin
   end
   else if(start_i)begin
     if(HD_i) begin
-      pc_o = pc_i-4;
+      pc_o <= pc_i-4;
     end
     else begin
-      pc_o = pc_i;
+      pc_o <= pc_i;
     end
   end
   else begin
-      pc_o = 32'b0;
+      pc_o <= 32'b0;
   end
 end
 

@@ -14,7 +14,7 @@ module Data_memory(
 
 always@(Address_i or WriteData_i or MemWrite_i or MemRead_i)begin
 	if(MemRead_i)begin
-		data_o = {
+		data_o <= {
 		    memory[Address_i + 3],
         	memory[Address_i + 2],
         	memory[Address_i + 1],
