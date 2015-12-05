@@ -6,7 +6,7 @@ reg		   Reset;
 reg                Clk;
 reg                Start;
 integer            i, outfile, counter;
-integer            stall, flush;
+integer            stall, flush, flag;
 
 always #(`CYCLE_TIME/2) Clk = ~Clk;    
 
@@ -20,6 +20,7 @@ initial begin
     counter = 0;
     stall = 0;
     flush = 0;
+    flag = 0;
     
     // initialize instruction memory
     for(i=0; i<256; i=i+1) begin
@@ -62,10 +63,14 @@ always@(posedge Clk) begin
 
     // put in your own signal to count stall and flush
     if(CPU.HD.mux8_o == 1 && CPU.Control.Jump_o == 0 && CPU.Control.Branch_o == 0)stall = stall + 1;
-    if(CPU.HD.IF_ID_o == 1)flush = flush + 1;  
+//    if(CPU.HD.IF_ID_o == 1)flush = flush + 1;
+    if(CPU.Control.Jump_o | (CPU.Eq.data_o & CPU.Control.Branch_o))flag = 1;  
     // print PC
     $fdisplay(outfile, "cycle = %d, Start = %d, Stall = %d, Flush = %d\nPC = %d", counter, Start, stall, flush, CPU.PC.pc_o);
-    
+    if(flag) begin
+        flush = flush + 1;
+        flag = 0;
+    end
     // print Registers
     $fdisplay(outfile, "Registers");
     $fdisplay(outfile, "R0(r0) = %d, R8 (t0) = %d, R16(s0) = %d, R24(t8) = %d", CPU.Registers.register[0], CPU.Registers.register[8] , CPU.Registers.register[16], CPU.Registers.register[24]);
